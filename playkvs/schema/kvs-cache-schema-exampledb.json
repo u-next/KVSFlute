@@ -1,0 +1,16 @@
+{
+    "example": {
+        "$comment": "Description of cache for this table",
+        "exampleId": {
+            "$comment": "ID",
+            "many": false,
+            "kvsKeys": ["EXAMPLE_ID"]
+        },
+        "something": {
+            "$comment": "Description",
+            "many": true,
+            "kvsKeys": ["SOME_COLUMN"],
+            "orderBy": ["SOMETHING_ELSE DESC", "EXAMPLE_ID"] 
+        }
+    }
+}
