@@ -7,61 +7,61 @@ This plugin provides three ways of accessing to KVS:
 - as cache for columns specified by DBFlute ConditionBean (CB-Embedded Cache)
 
 ## Setup
-1. Add dependency for [jedis](https://github.com/xetorthio/jedis) to `pom.xml`/`build.gradle`
+- Add dependency for [jedis](https://github.com/xetorthio/jedis) to `pom.xml`/`build.gradle`
    - because current version of KVSFlute only supports Redis
-1. Copy & paste directories under `freegen` to `freegen` in your project's dbflute-client
-1. Create `ControlFreeGen.vm` under `freegen` and add following:
-   ```
-   #parse("./kvs/ControlFreeGenKvsJava.vm")
-   #parse("./dbfluteOptional/ControlFreeGenDbfluteOptionalJava.vm")
-   ```
-1. Create `kvs-pool.json` and add information of KVS instance to connect to
-   ```
-   // e.g.
-   {
-       "examplekvs": {"$comment": "Example Store", "$configClass": "com.example.mylasta.direction.ExampleConfig"}
-   }
-   ```
-1. Add properties to `config.properties` and `env.properties`, and adjust themaccording to your condition (see `properties` files in this repo for instance)
+- Copy & paste directories under `freegen` to `freegen` in your project's dbflute-client
+- Create `ControlFreeGen.vm` under `freegen` and add following:
+```
+#parse("./kvs/ControlFreeGenKvsJava.vm")
+#parse("./dbfluteOptional/ControlFreeGenDbfluteOptionalJava.vm")
+```
+- Create `kvs-pool.json` and add information of KVS instance to connect to
+```
+// e.g.
+{
+    "examplekvs": {"$comment": "Example Store", "$configClass": "com.example.mylasta.direction.ExampleConfig"}
+}
+```
+- Add properties to `config.properties` and `env.properties`, and adjust themaccording to your condition (see `properties` files in this repo for instance)
    - Add a set of properties per KVS instance
-1. Add pool information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
+- Add pool information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
    - Add a set of pool information per KVS instance
-1. Execute 'freegen' task of DBFlute
+- Execute 'freegen' task of DBFlute
    - by `mvn` task
    - by `manage.sh`
 
 ### Setup for KVS Store
-1. Create `kvs-store-schema-{instanceName}.json` and define schema (see `playskvs/schema/kvs-store-schema-examplestore.json` for instance)
+- Create `kvs-store-schema-{instanceName}.json` and define schema (see `playskvs/schema/kvs-store-schema-examplestore.json` for instance)
    - Create schema.json per schema
-1. Add schema information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
+- Add schema information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
    - Add a set of schema information per schema
-1. Execute 'freegen' task of DBFlute
+- Execute 'freegen' task of DBFlute
 
 ### Setup for KVS Cache
-1. Create `kvs-cache-schema-{dbfluteClientName}.json` and define schema (see `playskvs/schema/kvs-store-schema-exampledb.json` for instance)
-1. Add schema information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
-1. Execute 'freegen' task of DBFlute
+- Create `kvs-cache-schema-{dbfluteClientName}.json` and define schema (see `playskvs/schema/kvs-store-schema-exampledb.json` for instance)
+- Add schema information to `freeGenMap.dfprop` (see `dfprop/freeGenMap.dfprop` for instance)
+- Execute 'freegen' task of DBFlute
 
 ### Setup for CB-Embedded Cache
-1. Add configuration to `dfprop/littladjustment.dfprop`
-   ```
-   # e.g.
-   ; columnNullObjectMap = map:{
-       ; providerPackage = org.dbflute.kvs.cache
-       ; isGearedToSpecify = true
-       ; columnMap = map:{
-           ; MEMBER_STATUS = map:{
-               ; DESCRIPTION = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
-           }
-           ; MEMBER_SECURITY = map:{
-               ; REMINDER_ANSWER = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
-               ; REMINDER_QUESTION = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
-               ; UPDATE_DATETIME = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
+- Add configuration to `dfprop/littladjustment.dfprop`
+```
+# e.g.
+; columnNullObjectMap = map:{
+    ; providerPackage = org.dbflute.kvs.cache
+    ; isGearedToSpecify = true
+    ; columnMap = map:{
+        ; MEMBER_STATUS = map:{
+            ; DESCRIPTION = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
+        }
+        ; MEMBER_SECURITY = map:{
+            ; REMINDER_ANSWER = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
+            ; REMINDER_QUESTION = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
+            ; UPDATE_DATETIME = KvsCacheColumnNullObject.getInstance().findColumn(this, "$$columnName$$", $$primaryKey$$)
            }
        }
    }
    ```
-1. Execute **' (re)generate'** task of DBflute
+- Execute **' (re)generate'** task of DBflute
    - CB-Embedded Cache modifies classes derived from DBFlute engine 
 
 ## Usage example
@@ -94,6 +94,7 @@ kvsEgStoreExampleBhv.delete(() -> {
     return entity;
 });
 ```
+
 ### KVS Cache
 ```java
 // Insert/Update
