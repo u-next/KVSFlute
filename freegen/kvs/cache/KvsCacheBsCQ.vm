@@ -50,7 +50,7 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}CQ {
     // ===================================================================================
     //                                                                           Condition
     //                                                                           =========
-#set ($targetdb = $tableMap.databaseMap.maindb.instance)
+#set ($targetdb = $tableMap.databaseMap[${tableMap.schema}].instance)
 #set ($dbTable = $targetdb.getTable($table.uncapCamelName))
 #foreach ($dbColumn in $dbTable.columnList)
 #set ($initCapName = ${manager.initCap($dbColumn.javaName)})

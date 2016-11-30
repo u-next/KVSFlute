@@ -63,8 +63,8 @@ map:{
             ; dbfluteDiFile = dbflute.xml
             ; dbflutePackage = com.example.dbflute
             ; databaseMap = map:{
-                ; maindb = map:{
-                    ; schemaFile = ./schema/project-schema-exampledb.xml
+                ; exampledb = map:{
+                    ; schemaDir = ./schema
                 }
             }
         }
