@@ -7,7 +7,7 @@ This plugin provides three ways of accessing to KVS:
 - as cache for columns specified by DBFlute ConditionBean (CB-Embedded Cache)
 
 ## Setup
-- Add dependency for [jedis](https://github.com/xetorthio/jedis) to `pom.xml`/`build.gradle`
+- Add dependency on [jedis](https://github.com/xetorthio/jedis) to `pom.xml`/`build.gradle`
    - because current version of KVSFlute only supports Redis
 - Copy & paste directories under `freegen` to `freegen` in your project's dbflute-client
 - Create `ControlFreeGen.vm` under `freegen` and add following:
