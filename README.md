@@ -1,5 +1,5 @@
 # KVSFlute
-Class generator plugin for [DBFlute](http://dbflute.seasar.org/) to access KVS.
+Class generator plugin for [DBFlute](http://dbflute.seasar.org/) to access to KVS.
 
 This plugin provides three ways of accessing to KVS:
 - as data store (KVS Store)
