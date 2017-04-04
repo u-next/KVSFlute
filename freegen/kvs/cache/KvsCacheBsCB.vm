@@ -18,7 +18,7 @@ ${manager.allClassCopyright}package ${request.package}.${tableMap.schema}.cbean.
 import org.dbflute.kvs.cache.cbean.KvsCacheConditionBean;
 import org.dbflute.optional.OptionalThing;
 
-import ${tableMap.dbflutePackage}.cbean.${table.camelizedName}CB;
+import ${tableMap.dbflutePackage}.cbean.$!{tableMap.schemaPrefix}${table.camelizedName}CB;
 import ${request.package}.${tableMap.schema}.cbean.cq.Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CQ;
 
 /**
@@ -67,8 +67,8 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}CB imp
     // ===================================================================================
     //                                                                               to...
     //                                                                               =====
-    public ${table.camelizedName}CB to${table.camelizedName}CB() {
-        ${table.camelizedName}CB cb = new ${table.camelizedName}CB();
+    public $!{tableMap.schemaPrefix}${table.camelizedName}CB to$!{tableMap.schemaPrefix}${table.camelizedName}CB() {
+        $!{tableMap.schemaPrefix}${table.camelizedName}CB cb = new $!{tableMap.schemaPrefix}${table.camelizedName}CB();
 
         // where
         query().xdfgetColumnEqualValue().entrySet().stream().forEach(entry -> {

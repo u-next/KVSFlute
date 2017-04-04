@@ -59,7 +59,7 @@ import ${request.package}.${tableMap.schema}.facade.${manager.initCap($tableMap.
  * The behavior of (${table.comment})${table.capCamelName}.
  * @author FreeGen
  */
-public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv extends AbstractKvsCacheBehaviorWritable<${table.camelizedName}, ${table.camelizedName}CB, Kvs${table.camelizedName}CB> {
+public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv extends AbstractKvsCacheBehaviorWritable<$!{tableMap.schemaPrefix}${table.camelizedName}, $!{tableMap.schemaPrefix}${table.camelizedName}CB, Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB> {
 
     // ===================================================================================
     //                                                                          Definition
@@ -104,9 +104,9 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
      */
     public OptionalEntity<$!{tableMap.schemaPrefix}${table.camelizedName}> selectEntityBy${column.capCamelName}(Consumer<Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB> cbLambda) {
         Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB = createCB(cbLambda);
-        ${table.camelizedName}CB cb = adjustKvsConditionBeanOf${column.capCamelName}(kvsCB);
+        $!{tableMap.schemaPrefix}${table.camelizedName}CB cb = adjustKvsConditionBeanOf${column.capCamelName}(kvsCB);
 
-        OptionalEntity<${table.camelizedName}> optEntity = ${tableMap.schema}KvsCacheFacade.findEntity(createKvsKeyListOf${column.capCamelName}(kvsCB), cb);
+        OptionalEntity<$!{tableMap.schemaPrefix}${table.camelizedName}> optEntity = ${tableMap.schema}KvsCacheFacade.findEntity(createKvsKeyListOf${column.capCamelName}(kvsCB), cb);
 
         return Stream.of(optEntity)
                 .filter(OptionalEntity::isPresent)
@@ -117,21 +117,27 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
                 .orElse(OptionalEntity.empty());
     }
 
-    // KVS CB から ${column.capCamelName} 用の ${table.camelizedName}CB を作成して返します。
-    protected ${table.camelizedName}CB adjustKvsConditionBeanOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB) {
-        ${table.camelizedName}CB cb = new ${table.camelizedName}CB();
+    // KVS CB から ${column.capCamelName} 用の $!{tableMap.schemaPrefix}${table.camelizedName}CB を作成して返します。
+    protected $!{tableMap.schemaPrefix}${table.camelizedName}CB adjustKvsConditionBeanOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB) {
+        $!{tableMap.schemaPrefix}${table.camelizedName}CB cb = new $!{tableMap.schemaPrefix}${table.camelizedName}CB();
         addKvsConditionOf${column.capCamelName}(kvsCB, cb);
 
         return cb;
     }
 
     // ${column.capCamelName} で DB に使う条件のみを kvsCB から取り出し cb に設定します。
-    protected void addKvsConditionOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, ${table.camelizedName}CB cb) {
+    protected void addKvsConditionOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
+        addDefaultSpecifyColumnOf$!{tableMap.schemaPrefix}${column.capCamelName}(kvsCB, cb);
         addDefaultWhereOf${column.capCamelName}(kvsCB, cb);
     }
 
+    // ${column.capCamelName} 用の select 句の列挙されるカラムを CB に設定します。
+    protected void addDefaultSpecifyColumnOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
+        cb.specify().everyColumn();
+    }
+
     // ${column.capCamelName} 用の キー条件を CB に設定します。
-    protected void addDefaultWhereOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, ${table.camelizedName}CB cb) {
+    protected void addDefaultWhereOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
         Map<ColumnInfo, Object> columnEqualValue = kvsCB.query().xdfgetColumnEqualValue();
 
 #foreach ($kvsKey in $column.kvsKeys)
@@ -162,14 +168,14 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
      */
     public List<$!{tableMap.schemaPrefix}${table.camelizedName}> selectListBy${column.capCamelName}(Consumer<Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB> cbLambda) {
         Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB = createCB(cbLambda);
-        ${table.camelizedName}CB cb = adjustKvsConditionBeanOf${column.capCamelName}(kvsCB);
+        $!{tableMap.schemaPrefix}${table.camelizedName}CB cb = adjustKvsConditionBeanOf${column.capCamelName}(kvsCB);
 
-        List<${table.camelizedName}> list = ${tableMap.schema}KvsCacheFacade.findList(createKvsKeyListOf${column.capCamelName}(kvsCB), cb);
+        List<$!{tableMap.schemaPrefix}${table.camelizedName}> list = ${tableMap.schema}KvsCacheFacade.findList(createKvsKeyListOf${column.capCamelName}(kvsCB), cb);
 
-        Predicate<${table.camelizedName}> filter = kvsCB.query().getWherePredicate();
-        Comparator<${table.camelizedName}> sorted = kvsCB.query().getOrderByComparator();
+        Predicate<$!{tableMap.schemaPrefix}${table.camelizedName}> filter = kvsCB.query().getWherePredicate();
+        Comparator<$!{tableMap.schemaPrefix}${table.camelizedName}> sorted = kvsCB.query().getOrderByComparator();
 
-        Stream<${table.camelizedName}> stream = list.stream().filter(filter);
+        Stream<$!{tableMap.schemaPrefix}${table.camelizedName}> stream = list.stream().filter(filter);
 
         if (sorted != null) {
             stream = stream.sorted(sorted);
@@ -182,23 +188,29 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
         return stream.collect(Collectors.toList());
     }
 
-    // KVS CB から ${column.capCamelName} 用の ${table.camelizedName}CB を作成して返します。
-    protected ${table.camelizedName}CB adjustKvsConditionBeanOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB) {
-        ${table.camelizedName}CB cb = new ${table.camelizedName}CB();
+    // KVS CB から ${column.capCamelName} 用の $!{tableMap.schemaPrefix}${table.camelizedName}CB を作成して返します。
+    protected $!{tableMap.schemaPrefix}${table.camelizedName}CB adjustKvsConditionBeanOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB) {
+        $!{tableMap.schemaPrefix}${table.camelizedName}CB cb = new $!{tableMap.schemaPrefix}${table.camelizedName}CB();
         addKvsConditionOf${column.capCamelName}(kvsCB, cb);
 
         return cb;
     }
 
-    // ${column.capCamelName} で DB に使う条件のみを kvsCB から取り出し cb に設定します。
-    protected void addKvsConditionOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, ${table.camelizedName}CB cb) {
+    // $!{tableMap.schemaPrefix}${column.capCamelName} で DB に使う条件のみを kvsCB から取り出し cb に設定します。
+    protected void addKvsConditionOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
+        addDefaultSpecifyColumnOf${column.capCamelName}(kvsCB, cb);
         addDefaultWhereOf${column.capCamelName}(kvsCB, cb);
         addDefaultOrderByOf${column.capCamelName}(cb);
         kvsCB.xgetFetchFirst().ifPresent(fetchSize -> cb.fetchFirst(fetchSize));
     }
 
+    // ${column.capCamelName} 用の select 句の列挙されるカラムを CB に設定します。
+    protected void addDefaultSpecifyColumnOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
+        cb.specify().everyColumn();
+    }
+
     // ${column.capCamelName} 用の キー条件を CB に設定します。
-    protected void addDefaultWhereOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, ${table.camelizedName}CB cb) {
+    protected void addDefaultWhereOf${column.capCamelName}(Kvs$!{tableMap.schemaPrefix}${table.camelizedName}CB kvsCB, $!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
         Map<ColumnInfo, Object> columnEqualValue = kvsCB.query().xdfgetColumnEqualValue();
 
 #foreach ($kvsKey in $column.kvsKeys)
@@ -213,7 +225,7 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
     }
 
     // ${column.capCamelName} 用のデフォルトソート順を CB に設定します。
-    protected void addDefaultOrderByOf${column.capCamelName}(${table.camelizedName}CB cb) {
+    protected void addDefaultOrderByOf${column.capCamelName}($!{tableMap.schemaPrefix}${table.camelizedName}CB cb) {
 #foreach ($order in $column.orderBy)
 #set ($ascDesc = "Asc")
 #foreach($value in $order.split(' '))
@@ -230,7 +242,7 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
     /**
      * ${column.capCamelName} 用のデフォルトソート順を Comparator で取得します。
      */
-    protected Comparator<${table.camelizedName}> createDefaultOrderByOf${column.capCamelName}() {
+    protected Comparator<$!{tableMap.schemaPrefix}${table.camelizedName}> createDefaultOrderByOf${column.capCamelName}() {
 #foreach ($order in $column.orderBy)
 #set ($methodName = "")
 #set ($ascDesc = "Comparator.naturalOrder()")
@@ -242,9 +254,9 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
 #end
 #end
 #if ($velocityCount == 1)
-        Comparator<${table.camelizedName}> comparator = Comparator.comparing(${table.camelizedName}::get${manager.camelize($methodName)}, $ascDesc);
+        Comparator<$!{tableMap.schemaPrefix}${table.camelizedName}> comparator = Comparator.comparing($!{tableMap.schemaPrefix}${table.camelizedName}::get${manager.camelize($methodName)}, $ascDesc);
 #else
-        comparator.thenComparing(${table.camelizedName}::get${manager.camelize($methodName)}, Comparator.naturalOrder());
+        comparator.thenComparing($!{tableMap.schemaPrefix}${table.camelizedName}::get${manager.camelize($methodName)}, Comparator.naturalOrder());
 #end
 #end
         return comparator;
@@ -301,7 +313,7 @@ public abstract class Kvs$!{tableMap.schemaPrefix}Bs${table.camelizedName}Bhv ex
         Map<ColumnInfo, Object> columnEqualValue = kvsCB.query().xdfgetColumnEqualValue();
 
 #foreach ($kvsKey in $column.kvsKeys)
-#set ($fieldName = ${manager.initUncap($manager.camelize($kvsKey))}) 
+#set ($fieldName = ${manager.initUncap($manager.camelize($kvsKey))})
         // $fieldName
         Object $fieldName = columnEqualValue.get(asDBMeta().column${manager.camelize($kvsKey)}());
         if ($fieldName == null) {
