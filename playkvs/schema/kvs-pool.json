@@ -1,3 +1,0 @@
-{
-    "examplekvs": {"$comment": "Example Store", "$configClass": "com.example.mylasta.direction.ExampleConfig"}
-}
